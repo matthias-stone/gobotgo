@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/gophergala2016/gobotgo/game"
 )
@@ -144,6 +145,7 @@ func (g *Game) waitHandler(w http.ResponseWriter, r *http.Request, id GameID) {
 	}
 	var t game.Color
 	for t = <-g.turn; t != p; t = <-g.turn {
+		time.Sleep(time.Millisecond * 100)
 		g.turn <- t
 	}
 	g.turn <- t
