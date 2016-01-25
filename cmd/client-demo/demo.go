@@ -11,7 +11,7 @@ import (
 	"github.com/gophergala2016/gobotgo/game"
 )
 
-var url = flag.String("url", "http://localhost:8100", "Root URL of gobotgo service")
+var url = flag.String("url", "http://gobotgo.bellstone.ca", "Root URL of gobotgo service")
 var competitive = flag.Bool("competitive", false, "Use a slightly more aggressive algorithm")
 
 func init() {

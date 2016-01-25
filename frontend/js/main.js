@@ -1,5 +1,5 @@
 
-var gameRoot = "http://localhost:8100/api/v1/game/";
+var gameRoot = "http://gobotgo.bellstone.ca/api/v1/game/";
 var startGame = gameRoot + "start/";
 var size = 19;
 var test_data = [];
