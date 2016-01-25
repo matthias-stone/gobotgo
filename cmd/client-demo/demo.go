@@ -100,7 +100,15 @@ type action struct {
 func (act *action) Act() error {
 	switch act.choice {
 	case wait:
-		return act.Wait()
+		err := act.Wait()
+		switch {
+		case err != nil:
+			return err
+		case act.BlackStones().Remaining == 0 && act.WhiteStones().Remaining == 0:
+			return game.ErrGameOver
+		default:
+			return nil
+		}
 	case pass:
 		return act.Pass()
 	case move:
