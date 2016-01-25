@@ -25,7 +25,7 @@ func playHandler(w http.ResponseWriter, r *http.Request) {
 		writeError(w, http.StatusBadRequest, fmt.Sprintf("id %d is not registered", id))
 		return
 	}
-	if g.gameOver {
+	if g.gameOver && action != "state" {
 		writeJSON(w, "Game Over")
 		return
 	}
