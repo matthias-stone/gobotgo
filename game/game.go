@@ -130,15 +130,18 @@ type PublicState struct {
 	LastMove      LastMove `json:"lastmove,omitempty"`
 }
 
-func (s *State) MarshalJSON() ([]byte, error) {
-	data := PublicState{
-		s.current,
+func (s *State) PublicState() *PublicState {
+	return &PublicState{
+		s.current.copy(),
 		s.player,
 		*s.stones[Black],
 		*s.stones[White],
 		s.last,
 	}
-	return json.Marshal(data)
+}
+
+func (s *State) MarshalJSON() ([]byte, error) {
+	return json.Marshal(s.PublicState())
 }
 
 func (s *State) UnmarshalJSON(data []byte) error {
