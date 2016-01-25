@@ -67,6 +67,7 @@ func play(c *client.Client) error {
 		if err := act.Act(); err != nil {
 			switch err {
 			case game.ErrRepeatState:
+				// Pass, because we're too lazy to remember the previous state. Or the one move that makes it invalid.
 				act.Pass()
 
 			case game.ErrNoStones:
