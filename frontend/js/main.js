@@ -12,7 +12,7 @@ var playRoot;
 var gameID;
 var lastBoard;
 
-// initialize some sample data and  draw the table containing it
+// initialize some sample data and draw the table containing it
 function init() {
     for (var i = 0; i < size; i++){
         test_data[i] = [];
@@ -20,7 +20,10 @@ function init() {
             test_data[i][j] = "None";
         }
     }
+
     drawTable(test_data);
+
+    $.get(startGame, setUpGame).fail(connectError);
 }
 
 function setUpGame(data, status) {
@@ -86,13 +89,14 @@ $('#GameBoard').on('click', 'td', function(_evt) {
 });
 
 $('#GameBoard').on('mouseenter', 'td', function(_evt) {
-    console.log("X: " + _evt.currentTarget.cellIndex + ", Y: " + _evt.currentTarget.parentElement.rowIndex);
     $('feedbackBox').text("X: " + _evt.currentTarget.cellIndex + ", Y: " + _evt.currentTarget.parentElement.rowIndex);
+    if ( _evt.currentTarget.cellIndex > 0 ) {
+        _evt.currentTarget.style.backgroundColor = "green";
+    }
 });
 
-// New Game
-$('.new').click(function () {
-    $.get(startGame, setUpGame).fail(connectError);
+$('#GameBoard').on('mouseleave', 'td', function(_evt) {
+    _evt.currentTarget.style.backgroundColor = "transparent";
 });
 
 $('.refresh').click(function () {
