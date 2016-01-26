@@ -18,8 +18,8 @@ html {
 }
 
 body {
-	color: #555753; 
-	background: #bbe;
+	background-image:
+    linear-gradient( to right, #000, #bbe 25%, #bbe 75%, #000);
 	margin: 0;
 	padding: 0;
 	font-size: 1.5em;
@@ -52,10 +52,11 @@ table {
     height: 800px;
     width: 800px;
     background-image: url("../img/grid.svg");
+    box-shadow: 10px 10px 5px #888888;
 }
 
 .feedbackBox {
-	height: 80px;
+	height: 20px;
 	margin-top: 8px;
 }
 
@@ -66,7 +67,7 @@ table {
 	font-size: 1em;
 	width:960px;
 	margin: 0 auto;
-	background-color: #fce;
+	background-color: #fcd;
 	box-shadow: 10px 10px 5px #888888;
 }
 

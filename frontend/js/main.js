@@ -1,3 +1,4 @@
+//var gameRoot = "http://localhost:8100/api/v1/game/"
 var gameRoot = "http://gobotgo.bellstone.ca/api/v1/game/";
 var startGame = gameRoot + "start/";
 var size = 19;
@@ -83,7 +84,7 @@ $('#GameBoard').on('click', 'td', function(_evt) {
 
 // Mouseover event for gameboard elements
 $('#GameBoard').on('mouseenter', 'td', function(_evt) {
-    $('.feedbackBox').text("X: " + _evt.currentTarget.cellIndex + ", Y: " + String.fromCharCode(65+_evt.currentTarget.parentElement.rowIndex));
+    $('.feedbackBox').text("X: " + _evt.currentTarget.cellIndex + ", Y: " + String.fromCharCode(65+_evt.currentTarget.parentElement.rowIndex-1));
     if ( _evt.currentTarget.cellIndex > 0 ) {
         _evt.currentTarget.style.backgroundColor = "green";
     }
