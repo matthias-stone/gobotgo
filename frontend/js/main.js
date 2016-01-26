@@ -1,22 +1,18 @@
-
-var gameRoot = "http://localhost:8100/api/v1/game/"
-//var gameRoot = "http://gobotgo.bellstone.ca/api/v1/game/";
+var gameRoot = "http://gobotgo.bellstone.ca/api/v1/game/";
 var startGame = gameRoot + "start/";
 var size = 19;
 
-var sendMove;
 var receiveState;
 var waitForServer;
 var playerColor;
+var lastBoard;
+var sendMove;
 var playRoot;
 var gameID;
-var lastBoard;
 
 // initialize some sample data and draw the table containing it
 function init() {
-
     createTable(size);
-
     $.get(startGame, setUpGame).fail(connectError);
 }
 
@@ -40,11 +36,13 @@ function getState(data, success) {
     waitForMove();
 }
 
+// Notify that wait is in progress, send the request off to server.
 function waitForMove(){
     showToast("Waiting for move", 2000);
     $.get(waitForServer, moveReceived).fail(connectError);
 }
 
+// Notify on move received. Refresh the board.
 function moveReceived(){
     showToast("Move recieved", 2000);
     $.get(receiveState, boardRefresh).fail(connectError);
