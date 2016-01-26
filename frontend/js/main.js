@@ -3,7 +3,6 @@ var gameRoot = "http://localhost:8100/api/v1/game/"
 //var gameRoot = "http://gobotgo.bellstone.ca/api/v1/game/";
 var startGame = gameRoot + "start/";
 var size = 19;
-var test_data = [];
 
 var sendMove;
 var receiveState;
@@ -15,14 +14,8 @@ var lastBoard;
 
 // initialize some sample data and draw the table containing it
 function init() {
-    for (var i = 0; i < size; i++){
-        test_data[i] = [];
-        for (var j = 0; j < size; j++){
-            test_data[i][j] = "None";
-        }
-    }
 
-    drawTable(test_data);
+    createTable(size);
 
     $.get(startGame, setUpGame).fail(connectError);
 }
@@ -90,15 +83,17 @@ $('#GameBoard').on('click', 'td', function(_evt) {
     $.post(sendMove, JSON.stringify([_evt.currentTarget.cellIndex-1, _evt.currentTarget.parentElement.rowIndex-1]), getState).fail(connectError);
 });
 
+// Mouseover event for gameboard elements
 $('#GameBoard').on('mouseenter', 'td', function(_evt) {
-    $('feedbackBox').text("X: " + _evt.currentTarget.cellIndex + ", Y: " + _evt.currentTarget.parentElement.rowIndex);
+    $('.feedbackBox').text("X: " + _evt.currentTarget.cellIndex + ", Y: " + String.fromCharCode(65+_evt.currentTarget.parentElement.rowIndex));
     if ( _evt.currentTarget.cellIndex > 0 ) {
         _evt.currentTarget.style.backgroundColor = "green";
     }
 });
 
-// Mouseover event for gameboard elements
+// Mouseout event for gameboard elements
 $('#GameBoard').on('mouseleave', 'td', function(_evt) {
+    $('.feedbackBox').text("");
     _evt.currentTarget.style.backgroundColor = "transparent";
 });
 
@@ -119,46 +114,29 @@ function showToast(_message, _time) {
 }
 
 // Render the board
-function drawTable(data) {
-    var header = $("<tr>")
+function createTable(size) {
+
+    // Create numbers across top
+    var header = $("<tr>")    
     $("#GameBoard").append(header);
 
-    for (var i = 0; i < data.length+1; i++) {
+    for (var i = 0; i < size+1; i++) {
         header.append("<th>" + i + "</th>");
     }
 
     header.append("</tr>");
 
+    // Create rows
     $("GameBoard").append("<tr>");
 
-    for (var i = 0; i < data.length; i++) {
-        drawRow(data[i], i);
-    }
-}
+    for (var i = 0; i < size; i++) {   
+        var row = $("<tr />")
+        $("#GameBoard").append(row);
 
-// Generate one full row given the data and the row to be generated
-function drawRow(rowData, currentRow) {
+        row.append($("<td>" + String.fromCharCode(65+i) + "</td>")); // add the letters on the left
 
-    var color = ""
-    var row = $("<tr />")
-
-    $("#GameBoard").append(row);
-    row.append($("<td>" + String.fromCharCode(65+currentRow) + "</td>"));
-
-    for (var j = 0; j < rowData.length; j++) {
-
-        if ( rowData[j] == "None") {
-            color = "<img src=img/null.png>"
-        }       
-        else if ( rowData[j] == "Black" ) {
-            color = "<img src=img/black.png>"
-        }  
-        else if ( rowData[j] == "White" ) {
-            color = "<img src=img/white.png>"
+        for (var j = 0; j < size; j++) {
+            row.append($("<td>" + "<img src=img/null.png>" + "</td>"));
         }
-
-        row.append($("<td>" + color + "</td>"));
     }
 }
-
-

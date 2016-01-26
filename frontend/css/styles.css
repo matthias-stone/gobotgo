@@ -54,7 +54,10 @@ table {
     background-image: url("../img/grid.svg");
 }
 
-
+.feedbackBox {
+	height: 100px;
+	margin-top: 10px;
+}
 
 .content{
 	padding-left: 70px;
@@ -68,7 +71,7 @@ table {
 }
 
 .divider{
-	padding: 10px;
+	padding: 8px;
 }
 
 /* Buttons and toasts */
